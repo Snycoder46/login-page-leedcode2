@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo-list</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background-color: rgb(232, 230, 227);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    .container {
+      background-color: rgb(98, 142, 126);
+      border-radius: 8px;
+      padding: 50px;
+      box-shadow: 0px 10px 10px 3px rgb(18, 16, 14);
+      height: 400px;
+      text-align: center;
+    }
+
+    .container h1 {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 40px;
+      color: whitesmoke;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 10px;
+      padding-bottom: 15px;
+    }
+
+    .container img {
+      width: 35px;
+      margin-left: 10px;
+    }
+
+    .input-box {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .input-box input {
+      font-size: 20px;
+      border-radius: 15px;
+      padding: 8px 10px;
+      background-color: rgb(238, 255, 255);
+      box-shadow: 0px 10px 40px rgb(193, 193, 142);
+      border: none;
+      transition: 0.3s;
+    }
+
+    .btn {
+      font-size: 20px;
+      border-radius: 14px;
+      padding: 8px 20px;
+      cursor: pointer;
+      background-color: rgb(214, 224, 224);
+      box-shadow: 0px 10px 40px rgb(193, 193, 142);
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background-color: rgb(231, 140, 4);
+      color: white;
+    }
+
+    ul {
+      padding: 0;
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    ul li {
+      list-style: none;
+      font-size: 20px;
+      padding: 12px 8px 12px 50px;
+      user-select: none;
+      cursor: pointer;
+      position: relative;
+    }
+
+    ul li:hover {
+      background-color: rgb(224, 255, 255);
+      border-radius: 8px;
+    }
+
+    ul li.checked {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    /* delete button */
+    ul li span.delete {
+      position: absolute;
+      right: 10px;
+      top: 8px;
+      font-size: 22px;
+      color: red;
+      cursor: pointer;
+    }
+
+    ul li span.delete:hover {
+      color: darkred;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        width: 90%;
+        padding: 20px;
+      }
+      .container h1 {
+        font-size: 28px;
+      }
+      .input-box input {
+        font-size: 18px;
+      }
+      .btn {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <h1>My To-Do List <img src="https://simpleicons.org/icons/todoist.svg" alt=""></h1>
+
+      <div class="input-box">
+        <input type="text" id="task-input" placeholder="Add your task">
+        <button class="btn">Add</button>
+      </div>
+
+      <ul class="list-container">
+        <li>Task 1</li>
+        <li>Task 2</li>
+        <li>Task 3</li>
+        <li>Task 4</li>
+      </ul>
+    </div>
+  </header>
+
+  <script>
+    // Select elements
+    const inputBox = document.getElementById("task-input");
+    const addBtn = document.querySelector(".btn");
+    const listContainer = document.querySelector(".list-container");
+
+    // Add task when button clicked
+    addBtn.addEventListener("click", () => {
+      const taskText = inputBox.value.trim();
+      if (taskText === "") {
+        alert("Please enter a task!");
+        return;
+      }
+
+      // Create a new list item
+      const li = document.createElement("li");
+      li.textContent = taskText;
+
+      // Add delete button
+      const span = document.createElement("span");
+      span.textContent = "×";
+      span.classList.add("delete");
+      li.appendChild(span);
+
+      // Add li to the list
+      listContainer.appendChild(li);
+
+      // Clear input box
+      inputBox.value = "";
+    });
+
+    // Mark as completed or delete
+    listContainer.addEventListener("click", (e) => {
+      if (e.target.tagName === "LI") {
+        e.target.classList.toggle("checked");
+      } else if (e.target.tagName === "SPAN") {
+        e.target.parentElement.remove();
+      }
+    });
+  </script>
+</body>
+</html>
